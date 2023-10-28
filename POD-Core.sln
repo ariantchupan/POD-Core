@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{F94ABA1A-FB3A-4C4E-BEAB-5A4F56EABADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer\IdentityServer.csproj", "{2B8C0160-F77E-47C1-994C-4844258E28A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer\IdentityServer.csproj", "{2B8C0160-F77E-47C1-994C-4844258E28A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F34DFCDE-53C0-4354-B393-8C188002340B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
