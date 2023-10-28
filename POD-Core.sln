@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.API", "services\c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce.Infrastructure", "Services\Commerce\Commerce.Infrastructure\Commerce.Infrastructure.csproj", "{C18CB782-5738-44AF-A0CD-C1A0705DA5F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateways", "APIGateways", "{0CD77756-790E-46F3-8403-439C9E93CCA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{715766BA-EA81-47DA-9FE5-42DBA6F3FBB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -8,4 +8,9 @@
     <ProjectReference Include="..\Products.Application\Products.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Persistence\" />
+  </ItemGroup>
+
 </Project>
