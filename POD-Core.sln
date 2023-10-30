@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{F94ABA1A-FB3A-4C4E-BEAB-5A4F56EABADB}"
 EndProject
@@ -11,37 +11,39 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{A4393E6F-8462-412E-BC63-5CA041F9882A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.API", "Services\Products\Products.API\Products.API.csproj", "{604410F6-035A-4860-8182-37D6558B5AFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Products.API", "Services\Products\Products.API\Products.API.csproj", "{604410F6-035A-4860-8182-37D6558B5AFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Application", "Services\Products\Products.Application\Products.Application.csproj", "{20975424-FA2C-4A6F-A4B3-E51134FBE572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Products.Application", "Services\Products\Products.Application\Products.Application.csproj", "{20975424-FA2C-4A6F-A4B3-E51134FBE572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Domain", "Services\Products\Products.Domain\Products.Domain.csproj", "{55BD2915-C037-4BF9-9910-9116C630967C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Products.Domain", "Services\Products\Products.Domain\Products.Domain.csproj", "{55BD2915-C037-4BF9-9910-9116C630967C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Infrastructure", "Services\Products\Products.Infrastructure\Products.Infrastructure.csproj", "{CCC4A012-2CF5-42A2-8748-1EADFD082E57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Products.Infrastructure", "Services\Products\Products.Infrastructure\Products.Infrastructure.csproj", "{CCC4A012-2CF5-42A2-8748-1EADFD082E57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commerce", "Commerce", "{E2492B6C-28FF-48D7-B0EB-14AFEF184583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce.API", "Services\Commerce\Commerce.API\Commerce.API.csproj", "{6E7FD03C-327C-4E4C-BCD3-D136F8E50C35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce.API", "Services\Commerce\Commerce.API\Commerce.API.csproj", "{6E7FD03C-327C-4E4C-BCD3-D136F8E50C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce.Application", "Services\Commerce\Commerce.Application\Commerce.Application.csproj", "{59F0979C-73C5-40D3-9ADE-5F609F51940F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce.Application", "Services\Commerce\Commerce.Application\Commerce.Application.csproj", "{59F0979C-73C5-40D3-9ADE-5F609F51940F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce.Domain", "Services\Commerce\Commerce.Domain\Commerce.Domain.csproj", "{AE04CEC0-158E-41AA-851D-B3418AB76812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce.Domain", "Services\Commerce\Commerce.Domain\Commerce.Domain.csproj", "{AE04CEC0-158E-41AA-851D-B3418AB76812}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customers", "Customers", "{FB8F0644-BBE5-4327-B22B-36AAFC17666A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Infrastructure", "Services\Customers\Customers.Infrastructure\Customers.Infrastructure.csproj", "{FA07E5BD-1854-43FC-978C-143917C1815C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customers.Infrastructure", "Services\Customers\Customers.Infrastructure\Customers.Infrastructure.csproj", "{FA07E5BD-1854-43FC-978C-143917C1815C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Domain", "Services\Customers\Customers.Domain\Customers.Domain.csproj", "{AA5A6A44-E446-4494-AAFF-97278F816308}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customers.Domain", "Services\Customers\Customers.Domain\Customers.Domain.csproj", "{AA5A6A44-E446-4494-AAFF-97278F816308}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.Application", "Services\Customers\Customers.Application\Customers.Application.csproj", "{5BCC171F-52E1-417E-BE50-A190B6A4B1D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customers.Application", "Services\Customers\Customers.Application\Customers.Application.csproj", "{5BCC171F-52E1-417E-BE50-A190B6A4B1D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers.API", "services\customers\Customers.API\Customers.API.csproj", "{63D4914F-9296-4A7F-8247-D17A17413365}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customers.API", "services\customers\Customers.API\Customers.API.csproj", "{63D4914F-9296-4A7F-8247-D17A17413365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce.Infrastructure", "Services\Commerce\Commerce.Infrastructure\Commerce.Infrastructure.csproj", "{C18CB782-5738-44AF-A0CD-C1A0705DA5F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce.Infrastructure", "Services\Commerce\Commerce.Infrastructure\Commerce.Infrastructure.csproj", "{C18CB782-5738-44AF-A0CD-C1A0705DA5F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateways", "APIGateways", "{0CD77756-790E-46F3-8403-439C9E93CCA6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{715766BA-EA81-47DA-9FE5-42DBA6F3FBB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotAPIGW", "APIGateways\OcelotAPIGW\OcelotAPIGW.csproj", "{9C08461B-C9C2-4060-98F7-13D9817B7161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +103,10 @@ Global
 		{C18CB782-5738-44AF-A0CD-C1A0705DA5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C18CB782-5738-44AF-A0CD-C1A0705DA5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C18CB782-5738-44AF-A0CD-C1A0705DA5F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C08461B-C9C2-4060-98F7-13D9817B7161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C08461B-C9C2-4060-98F7-13D9817B7161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C08461B-C9C2-4060-98F7-13D9817B7161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C08461B-C9C2-4060-98F7-13D9817B7161}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{5BCC171F-52E1-417E-BE50-A190B6A4B1D7} = {FB8F0644-BBE5-4327-B22B-36AAFC17666A}
 		{63D4914F-9296-4A7F-8247-D17A17413365} = {FB8F0644-BBE5-4327-B22B-36AAFC17666A}
 		{C18CB782-5738-44AF-A0CD-C1A0705DA5F0} = {E2492B6C-28FF-48D7-B0EB-14AFEF184583}
+		{9C08461B-C9C2-4060-98F7-13D9817B7161} = {0CD77756-790E-46F3-8403-439C9E93CCA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDDCC66A-B592-4145-A4F8-1D72B25CB22C}
