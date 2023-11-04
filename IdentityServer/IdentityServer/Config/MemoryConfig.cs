@@ -12,7 +12,8 @@ namespace IdentityServer.Config
         public static IEnumerable<IdentityResource> IdentityResources() =>
             new List<IdentityResource>
             {
-
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
             };
         public static IEnumerable<Client> Clients() =>
             new List<Client>
