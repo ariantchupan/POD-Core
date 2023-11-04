@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateways", "APIGateways"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{715766BA-EA81-47DA-9FE5-42DBA6F3FBB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotAPIGW", "APIGateways\OcelotAPIGW\OcelotAPIGW.csproj", "{9C08461B-C9C2-4060-98F7-13D9817B7161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotAPIGW", "APIGateways\OcelotAPIGW\OcelotAPIGW.csproj", "{9C08461B-C9C2-4060-98F7-13D9817B7161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

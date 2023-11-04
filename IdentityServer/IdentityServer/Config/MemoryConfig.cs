@@ -1,12 +1,9 @@
-﻿using IdentityModel;
-using IdentityServer4;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Test;
+
+
 
 namespace IdentityServer.Config
 {
@@ -15,19 +12,17 @@ namespace IdentityServer.Config
         public static IEnumerable<IdentityResource> IdentityResources() =>
             new List<IdentityResource>
             {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+
             };
         public static IEnumerable<Client> Clients() =>
             new List<Client>
             {
-                new Client
-                {
-                    ClientId= "first-client",
-                    ClientSecrets=new []{new Secret("atchupan".ToSha512())},
-                    AllowedGrantTypes= GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes={IdentityServerConstants.StandardScopes.OpenId}
-                }
+               
+            };
+        public static IEnumerable<ApiScope> ApiScopes() =>
+            new List<ApiScope>
+            {
+               
             };
         public static List<TestUser> TestUsers() =>
             new List<TestUser>
