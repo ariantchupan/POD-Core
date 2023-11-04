@@ -18,6 +18,7 @@ namespace IdentityServer.Infrastructure.Persistence
           DbContextOptions<IdentityDbContext> options)
         : base(options)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +41,9 @@ namespace IdentityServer.Infrastructure.Persistence
                     Subject = "d860efca-22d9-47fd-8249-791ba61b07c7",
                     UserName = "David",
                     Email = "david@someprovider.com",
-                    Active = true
+                    Active = true,
+                    CreatedBy = "test",
+                    CreatedDate = DateTime.Now,
                 },
                 new User()
                 {
@@ -49,7 +52,9 @@ namespace IdentityServer.Infrastructure.Persistence
                     Subject = "b7539694-97e7-4dfe-84da-b4256e1ff5c7",
                     UserName = "Emma",
                     Email = "emma@someprovider.com",
-                    Active = true
+                    Active = true,
+                    CreatedBy = "test",
+                    CreatedDate = DateTime.Now,
                 });
 
             modelBuilder.Entity<UserClaim>().HasData(
@@ -66,7 +71,7 @@ namespace IdentityServer.Infrastructure.Persistence
                  UserId = new Guid("13229d33-99e0-41b3-b18d-4f72127e3971"),
                  Type = "family_name",
                  Value = "Flagg"
-             }, 
+             },
              new UserClaim()
              {
                  Id = Guid.NewGuid(),
@@ -94,14 +99,14 @@ namespace IdentityServer.Infrastructure.Persistence
                  UserId = new Guid("96053525-f4a5-47ee-855e-0ea77fa6c55a"),
                  Type = "family_name",
                  Value = "Flagg"
-             }, 
+             },
              new UserClaim()
              {
                  Id = Guid.NewGuid(),
                  UserId = new Guid("96053525-f4a5-47ee-855e-0ea77fa6c55a"),
                  Type = "country",
                  Value = "be"
-             }, 
+             },
              new UserClaim()
              {
                  Id = Guid.NewGuid(),

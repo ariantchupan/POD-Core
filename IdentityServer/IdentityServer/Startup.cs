@@ -7,6 +7,8 @@ using Duende.IdentityServer.Test;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using IdentityServer.Extensions;
+using IdentityServer.Infrastructure;
+using IdentityServer.Infrastructure.Repositories;
 
 namespace IdentityServer
 {
@@ -23,6 +25,7 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddInfrastructureServices(_configuration);
             string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
             string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
 
@@ -37,7 +40,9 @@ namespace IdentityServer
                     options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
                 })
-                .AddTestUsers(new List<TestUser>());
+                .AddProfileService<LocalUserProfileService>();
+               
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
