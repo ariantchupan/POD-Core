@@ -16,7 +16,13 @@ namespace Middlewares.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             
-            services.Configure<KavenegarSettings>(c => configuration.GetSection("KavehnegarSettings"));
+          
+            services.Configure<KavenegarSettings>(c =>
+            {
+                c.ApiKey = configuration.GetSection("KavehnegarSettings:ApiKey").Value;
+                c.TemplateVerify = configuration.GetSection("KavehnegarSettings:TemplateVerify").Value;
+
+            });
             services.AddTransient<IKavenegarService, KavehnegarService>();
 
             return services;

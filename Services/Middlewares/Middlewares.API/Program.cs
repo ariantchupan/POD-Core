@@ -13,7 +13,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     var app = builder
-        .ConfigureServices()
+        .ConfigureServices(builder.Configuration)
         .ConfigurePipeline();
     app.Run();
 }

@@ -1,26 +1,24 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Middlewares.Application;
 using Middlewares.Infrastructure;
 
 namespace Middlewares.API.Extensions
 {
-    public static  class HostingExtensions
+    public static class HostingExtensions
     {
-        public static class ConfigurationHelper
-        {
-            public static IConfiguration config;
-            public static void Initialize(IConfiguration Configuration)
-            {
-                config = Configuration;
-            }
-        }
-        public static WebApplication ConfigureServices(
-            this WebApplicationBuilder builder)
-        {
-            builder.Services.AddControllers();
 
+
+        private static readonly IConfiguration _config;
+
+        public static WebApplication ConfigureServices(
+            this WebApplicationBuilder builder, IConfiguration _configuration)
+        {
+         
+            builder.Services.AddControllers();
+            
             builder.Services.AddApplicationServices();
-            builder.Services.AddInfrastructureServices(ConfigurationHelper.config);
+            builder.Services.AddInfrastructureServices(builder.Configuration);
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
