@@ -10,6 +10,6 @@ namespace Middlewares.Application.Model.Kavenegar
     {
         public string ApiKey { get; set; }
         public string TemplateVerify { get; set; }
-        public string[] receptor { get; set; }
+     
     }
 }
