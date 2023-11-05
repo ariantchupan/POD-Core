@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using IdentityServer.Extensions;
 using IdentityServer.Infrastructure;
 using IdentityServer.Infrastructure.Repositories;
+using IdentityServer.Application;
+using Microsoft.OpenApi.Models;
 
 namespace IdentityServer
 {
@@ -24,8 +26,14 @@ namespace IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
 
+            services.AddApplicationServices();
             services.AddInfrastructureServices(_configuration);
+
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
             string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
             string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
 
@@ -41,7 +49,10 @@ namespace IdentityServer
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
                 })
                 .AddProfileService<LocalUserProfileService>();
-               
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
+            });
 
         }
 
@@ -51,11 +62,23 @@ namespace IdentityServer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1"));
             }
             HostingExtensions.InitializeDatabase(app);
             app.UseIdentityServer();
 
-         
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
 
