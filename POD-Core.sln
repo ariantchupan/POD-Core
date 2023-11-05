@@ -69,7 +69,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares.Domain", "Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares.Infrastructure", "Services\Middlewares\Middlewares.Infrastructure\Middlewares.Infrastructure.csproj", "{6799BF97-BBDE-4D5D-AE19-BD047066FDD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares.API", "Middlewares.API\Middlewares.API.csproj", "{E84644E3-F769-42B2-9E9E-EED2DE42AD72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares.API", "Services\Middlewares\Middlewares.API\Middlewares.API.csproj", "{D73BB4A6-6B74-4C22-9EA0-4A92763F1538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,10 +173,10 @@ Global
 		{6799BF97-BBDE-4D5D-AE19-BD047066FDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6799BF97-BBDE-4D5D-AE19-BD047066FDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6799BF97-BBDE-4D5D-AE19-BD047066FDD5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E84644E3-F769-42B2-9E9E-EED2DE42AD72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E84644E3-F769-42B2-9E9E-EED2DE42AD72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E84644E3-F769-42B2-9E9E-EED2DE42AD72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E84644E3-F769-42B2-9E9E-EED2DE42AD72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73BB4A6-6B74-4C22-9EA0-4A92763F1538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73BB4A6-6B74-4C22-9EA0-4A92763F1538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73BB4A6-6B74-4C22-9EA0-4A92763F1538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73BB4A6-6B74-4C22-9EA0-4A92763F1538}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,7 +211,7 @@ Global
 		{5B55C88F-2315-40BB-81E6-C9122C0FBBF4} = {759817E2-A42D-4D5F-A57E-3D51C428131A}
 		{04370F27-7AB5-4853-A94E-8E00223D3672} = {759817E2-A42D-4D5F-A57E-3D51C428131A}
 		{6799BF97-BBDE-4D5D-AE19-BD047066FDD5} = {759817E2-A42D-4D5F-A57E-3D51C428131A}
-		{E84644E3-F769-42B2-9E9E-EED2DE42AD72} = {759817E2-A42D-4D5F-A57E-3D51C428131A}
+		{D73BB4A6-6B74-4C22-9EA0-4A92763F1538} = {759817E2-A42D-4D5F-A57E-3D51C428131A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDDCC66A-B592-4145-A4F8-1D72B25CB22C}
