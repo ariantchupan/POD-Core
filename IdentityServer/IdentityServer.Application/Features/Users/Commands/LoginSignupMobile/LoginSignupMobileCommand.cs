@@ -7,8 +7,8 @@ using MediatR;
 
 namespace IdentityServer.Application.Features.Users.Commands.AddUser
 {
-    public class AddUserCommand:IRequest<int>
+    public class LoginSignupMobileCommand : IRequest<int>
     {
-
+        public string MobileNumber { get; set; }
     }
 }

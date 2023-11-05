@@ -59,7 +59,7 @@ namespace IdentityServer.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }

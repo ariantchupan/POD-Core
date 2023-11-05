@@ -1,6 +1,7 @@
 ﻿using IdentityServer.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -51,5 +52,6 @@ namespace IdentityServer.Application.Contracts.Persistence
         Task<bool> ActivateUserAsync(string securityCode);
 
         Task<bool> SaveChangesAsync();
+        Task<bool> RefreshSecurityToken(Guid userId, String code);
     }
 }

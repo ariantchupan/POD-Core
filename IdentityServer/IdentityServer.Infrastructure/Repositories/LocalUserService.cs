@@ -1,4 +1,5 @@
-﻿using IdentityServer.Application.Contracts.Persistence;
+﻿using Azure.Core;
+using IdentityServer.Application.Contracts.Persistence;
 using IdentityServer.Domain.Entities;
 using IdentityServer.Infrastructure.Persistence;
 using Microsoft.AspNet.Identity;
@@ -30,6 +31,7 @@ namespace IdentityServer.Infrastructure.Repositories
         public async Task<User> FindUserByExternalProviderAsync(
             string provider, string providerIdentityKey)
         {
+
             if (string.IsNullOrWhiteSpace(provider))
             {
                 throw new ArgumentNullException(nameof(provider));
@@ -254,7 +256,7 @@ namespace IdentityServer.Infrastructure.Repositories
                 u.Subject == subject);
         }
 
-        public void AddUser(User userToAdd, string password)
+        public async void AddUser(User userToAdd, string password)
         {
             if (userToAdd == null)
             {
@@ -273,15 +275,13 @@ namespace IdentityServer.Infrastructure.Repositories
                 throw new Exception("Email must be unique");
             }
 
-            userToAdd.SecurityCode = Convert.ToBase64String(
-                RandomNumberGenerator.GetBytes(128));
             userToAdd.SecurityCodeExpirationDate = DateTime.UtcNow.AddHours(1);
 
             // hash & salt the password
             userToAdd.Password =
                 _passwordHasher.HashPassword(userToAdd, password);
 
-            _context.Users.Add(userToAdd);
+            await AddAsync(userToAdd);
         }
 
         public async Task<bool> ActivateUserAsync(string securityCode)
@@ -303,12 +303,32 @@ namespace IdentityServer.Infrastructure.Repositories
 
             user.Active = true;
             user.SecurityCode = null;
+            await UpdateAsync(user);
             return true;
         }
+
 
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() > 0);
+        }
+
+        public async Task<bool> RefreshSecurityToken(Guid userId, string Code)
+        {
+
+            var user = GetByIdAsync(userId).Result;
+            if (user != null)
+            {
+                user.LastModifiedDate = DateTime.UtcNow;
+                user.SecurityCode = Code;
+                await UpdateAsync(user);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+          
         }
     }
 }

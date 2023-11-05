@@ -15,8 +15,6 @@ namespace Middlewares.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         [HttpPost(Name = "SMSVerify")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> SMSVerify([FromBody] SendVerifyCommand command)
         {

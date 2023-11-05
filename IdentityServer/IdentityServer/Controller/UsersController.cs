@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using IdentityServer.Application.Features.Users.Commands.AddUser;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,13 +17,11 @@ namespace IdentityServer.Controller
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-        //[HttpPost(Name = "SMSVerify")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesDefaultResponseType]
-        //public async Task<ActionResult> SMSVerify([FromBody] SendVerifyCommand command)
-        //{
-        //    return Ok(await _mediator.Send(command));
-        //}
+        [HttpPost(Name = "LoginSignupMobile")]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> LoginSignupMobile([FromBody] LoginSignupMobileCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

@@ -7,9 +7,9 @@ using FluentValidation;
 
 namespace IdentityServer.Application.Features.Users.Commands.AddUser
 {
-    public class AddUserCommandValidator: AbstractValidator<AddUserCommand>
+    public class LoginSignupMobileCommandValidator: AbstractValidator<LoginSignupMobileCommand>
     {
-        public AddUserCommandValidator()
+        public LoginSignupMobileCommandValidator()
         {
 
         }
