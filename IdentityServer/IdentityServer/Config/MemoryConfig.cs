@@ -12,44 +12,29 @@ namespace IdentityServer.Config
         public static IEnumerable<IdentityResource> IdentityResources() =>
             new List<IdentityResource>
             {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                //new IdentityResources.OpenId(),
+                //new IdentityResources.Profile()
             };
         public static IEnumerable<Client> Clients() =>
             new List<Client>
             {
-               
+                new Client()
+                {
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientId = "client",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    AllowedScopes = { "secretApi" },
+                }
             };
         public static IEnumerable<ApiScope> ApiScopes() =>
             new List<ApiScope>
             {
-               
+                new ApiScope(){Name = "secretApi"},
             };
-        public static List<TestUser> TestUsers() =>
-            new List<TestUser>
+        public static IEnumerable<ApiResource> ApiResources() =>
+            new List<ApiResource>
             {
-                new TestUser
-                {
-                    SubjectId="abc1",
-                    Username="arian",
-                    Password="arian",
-                    Claims= new List<Claim>
-                    {
-                        new Claim("given_name","frank"),
-                        new Claim("family_name","ozz")
-                    }
-                },
-                new TestUser
-                {
-                    SubjectId="abc2",
-                    Username="seros",
-                    Password="arian",
-                    Claims= new List<Claim>
-                    {
-                        new Claim("given_name","seros"),
-                        new Claim("family_name","ozz")
-                    }
-                }
+
             };
     }
 }
