@@ -25,4 +25,10 @@
     <ProjectReference Include="..\IdentityServer.Application\IdentityServer.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Persistence\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>

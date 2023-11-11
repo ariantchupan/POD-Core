@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using IdentityServer.Extensions;
 using IdentityServer.Infrastructure;
-using IdentityServer.Infrastructure.Repositories;
 using IdentityServer.Application;
 using IdentityServer.Config;
 using Microsoft.OpenApi.Models;
@@ -36,27 +35,29 @@ namespace IdentityServer
             services.AddSwaggerGen();
 
 
-            services.AddIdentityServer()
-                .AddInMemoryClients(MemoryConfig.Clients())
-                .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
-                .AddInMemoryApiResources(MemoryConfig.ApiResources())
-                .AddInMemoryApiScopes(MemoryConfig.ApiScopes())
-                .AddDeveloperSigningCredential();
-            //string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
-            //string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
-
             //services.AddIdentityServer()
-            //    .AddConfigurationStore(options =>
-            //    {
-            //        options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
-            //            sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
-            //    })
-            //    .AddOperationalStore(options =>
-            //    {
-            //        options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
-            //            sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
-            //    })
-            //    .AddProfileService<LocalUserProfileService>();
+            //    .AddInMemoryClients(MemoryConfig.Clients())
+            //    .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
+            //    .AddInMemoryApiResources(MemoryConfig.ApiResources())
+            //    .AddInMemoryApiScopes(MemoryConfig.ApiScopes())
+            //    .AddTestUsers(MemoryConfig.TestUsers())
+            //    .AddDeveloperSigningCredential();
+            string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
+            string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
+
+            services.AddIdentityServer()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
+                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
+                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
+                })
+                .AddTestUsers(MemoryConfig.TestUsers());
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
@@ -73,7 +74,7 @@ namespace IdentityServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1"));
             }
-            //HostingExtensions.InitializeDatabase(app);
+            HostingExtensions.InitializeDatabase(app);
             app.UseIdentityServer();
 
 
