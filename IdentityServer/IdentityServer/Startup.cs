@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using IdentityServer.Infrastructure;
 using IdentityServer.Application;
-using IdentityServer.Config;
-using IdentityServer.Data;
 using IdentityServer.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,6 +35,16 @@ namespace IdentityServer
             string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
             string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
 
+
+
+            //services.AddIdentityServer()
+            //    .AddInMemoryClients(MemoryConfig.Clients())
+            //    .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
+            //    .AddInMemoryApiResources(MemoryConfig.ApiResources())
+            //    .AddInMemoryApiScopes(MemoryConfig.ApiScopes())
+            //    .AddAspNetIdentity<IdentityUser>()
+            //    .AddDeveloperSigningCredential();
+
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
                 .AddConfigurationStore(options =>
@@ -51,7 +58,7 @@ namespace IdentityServer
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
                 })
                 .AddDeveloperSigningCredential();
-               
+
 
             services.AddSwaggerGen(c =>
             {
