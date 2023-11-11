@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Duende.IdentityServer;
-using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Test;
-
+using IdentityServer4;
+using IdentityServer4.Models;
+using IdentityServer4.Test;
 
 
 namespace IdentityServer.Config
@@ -14,47 +13,32 @@ namespace IdentityServer.Config
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource
+                {
+                    Name = "role",
+                    UserClaims = new List<string>{"role"}
+                }
             };
         public static IEnumerable<Client> Clients() =>
             new List<Client>
             {
-                new Client()
+                new Client
                 {
-                    ClientId = "angular",
+                    ClientId = "interactive",
+                    ClientSecrets = {new Secret("SuperSecretPassword".Sha256())},
 
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
+                    AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "http://localhost:4200" },
-                    PostLogoutRedirectUris = { "http://localhost:4200" },
-                    AllowedCorsOrigins = { "http://localhost:4200" },
+                    RedirectUris = {"https://localhost:5001/signin-oidc"},
+                    FrontChannelLogoutUri = "https://localhost:5001/signout-oidc",
+                    PostLogoutRedirectUris = {"https://localhost:5001/signout-callback-oidc"},
 
-                    AllowedScopes = {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        "secretApi",
-                    },
-
-                    AllowAccessTokensViaBrowser = true,
-                    RequireConsent = false,
-                },
-                new Client()
-                {
-                    ClientId = "postman",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-                    RedirectUris = { "https://oauth.pstmn.io/v1/callback" },
-                    AllowedScopes =
-                    {
-                        "secretApi",
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    },
-                    AllowAccessTokensViaBrowser = true,
                     AllowOfflineAccess = true,
-                    RequireConsent = false
+                    AllowedScopes = {"openid", "profile", "weatherapi.read"},
+                    RequirePkce = true,
+                    RequireConsent = true,
+                    AllowPlainTextPkce = false
                 },
                 new Client()
                 {

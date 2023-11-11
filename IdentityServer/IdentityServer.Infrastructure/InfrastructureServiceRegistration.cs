@@ -1,16 +1,9 @@
-﻿using Duende.IdentityServer.Test;
-using IdentityServer.Application.Contracts.Persistence;
-
-using Microsoft.EntityFrameworkCore;
+﻿
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using IdentityServer.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Infrastructure
 {
@@ -18,6 +11,14 @@ namespace IdentityServer.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDbContext<AspNetIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("IdentityDBConnectionString")
+                    , b => b.MigrationsAssembly(("IdentityServer.Infrastructure")));
+
+            });
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AspNetIdentityDbContext>();
       
             return services;
         }

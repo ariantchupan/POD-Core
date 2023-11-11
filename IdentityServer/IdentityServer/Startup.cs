@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
-using Duende.IdentityServer.Test;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using IdentityServer.Extensions;
 using IdentityServer.Infrastructure;
 using IdentityServer.Application;
 using IdentityServer.Config;
+using IdentityServer.Data;
+using IdentityServer.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer
 {
@@ -34,18 +35,11 @@ namespace IdentityServer
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-
-            //services.AddIdentityServer()
-            //    .AddInMemoryClients(MemoryConfig.Clients())
-            //    .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
-            //    .AddInMemoryApiResources(MemoryConfig.ApiResources())
-            //    .AddInMemoryApiScopes(MemoryConfig.ApiScopes())
-            //    .AddTestUsers(MemoryConfig.TestUsers())
-            //    .AddDeveloperSigningCredential();
             string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
             string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
 
             services.AddIdentityServer()
+                .AddAspNetIdentity<IdentityUser>()
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
@@ -56,7 +50,8 @@ namespace IdentityServer
                     options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
                         sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
                 })
-                .AddTestUsers(MemoryConfig.TestUsers());
+                .AddDeveloperSigningCredential();
+               
 
             services.AddSwaggerGen(c =>
             {
