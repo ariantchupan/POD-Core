@@ -4,16 +4,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using IdentityServer.Infrastructure;
 using IdentityServer.Application;
-using IdentityServer.Extensions;
 using IdentityServer.Validation;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
-using System.Reflection;
 using IdentityServer.Config;
-using IdentityServer.Infrastructure.Persistence;
+using MassTransit;
 
 
 namespace IdentityServer
@@ -42,7 +38,14 @@ namespace IdentityServer
             string configurationStoreCS = _configuration.GetConnectionString("configurationStoreCS");
             string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
 
-
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(_configuration["EventBusSettings:HostAddress"]);
+               
+                });
+            });
             services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Middlewares.Application;
 using Middlewares.Infrastructure;
@@ -16,7 +17,15 @@ namespace Middlewares.API.Extensions
         {
          
             builder.Services.AddControllers();
-            
+
+            builder.Services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(_configuration["EventBusSettings:HostAddress"]);
+                });
+            });
+
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
 

@@ -11,6 +11,7 @@ using Middlewares.Infrastructure;
 
 try
 {
+  
     var builder = WebApplication.CreateBuilder(args);
     var app = builder
         .ConfigureServices(builder.Configuration)
