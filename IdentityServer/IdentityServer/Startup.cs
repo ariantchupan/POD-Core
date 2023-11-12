@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityServer.Config;
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace IdentityServer
@@ -28,10 +29,10 @@ namespace IdentityServer
         {
             services.AddControllers();
 
-          
+
             services.AddApplicationServices();
             services.AddInfrastructureServices(_configuration);
-           
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
@@ -43,35 +44,40 @@ namespace IdentityServer
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(_configuration["EventBusSettings:HostAddress"]);
-               
+
                 });
             });
+            //services.AddIdentityServer(options =>
+            //    {
+            //        options.Events.RaiseErrorEvents = true;
+            //        options.Events.RaiseFailureEvents = true;
+            //    })
+            //    .AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryApiResources(MemoryConfig.ApiResources())
+            //    .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
+            //    .AddInMemoryClients(MemoryConfig.Clients())
+            //    .AddAspNetIdentity<IdentityUser>();
+
             services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseFailureEvents = true;
                 })
-                .AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(MemoryConfig.ApiResources())
-                .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
-                .AddInMemoryClients(MemoryConfig.Clients())
-                .AddAspNetIdentity<IdentityUser>();
+                //.AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
+                .AddAspNetIdentity<IdentityUser>()
 
-            //services.AddIdentityServer()
-            //    //.AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
-            //    .AddAspNetIdentity<IdentityUser>()
-            //    .AddConfigurationStore(options =>
-            //    {
-            //        options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
-            //            sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
-            //    })
-            //    .AddOperationalStore(options =>
-            //    {
-            //        options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
-            //            sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
-            //    })
-            //    .AddDeveloperSigningCredential();
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
+                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
+                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
+                })
+                .AddDeveloperSigningCredential();
 
 
             services.AddSwaggerGen(c =>
@@ -98,7 +104,7 @@ namespace IdentityServer
 
             app.UseHttpsRedirection();
 
-        
+
 
             app.UseAuthorization();
 
