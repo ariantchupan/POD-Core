@@ -18,6 +18,7 @@ namespace IdentityServer.Infrastructure
 
             });
             services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<AspNetIdentityDbContext>();
       
             return services;

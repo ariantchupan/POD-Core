@@ -3,6 +3,8 @@ using System.Security.Claims;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
+using IdentityModel;
+using IdentityServer.Constants;
 
 
 
@@ -15,50 +17,34 @@ namespace IdentityServer.Config
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource
-                {
-                    Name = "role",
-                    UserClaims = new List<string>{"role"}
-                }
+                new IdentityResources.Phone()
             };
         public static IEnumerable<Client> Clients() =>
             new List<Client>
             {
                 new Client
                 {
-                    ClientId = "interactive",
-                    ClientSecrets = {new Secret("SuperSecretPassword".Sha256())},
-
-                    AllowedGrantTypes = GrantTypes.Code,
-
-                    RedirectUris = {"https://localhost:5001/signin-oidc"},
-                    FrontChannelLogoutUri = "https://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = {"https://localhost:5001/signout-callback-oidc"},
-
-                    AllowOfflineAccess = true,
-                    AllowedScopes = {"openid", "profile", "weatherapi.read"},
-                    RequirePkce = true,
-                    RequireConsent = true,
-                    AllowPlainTextPkce = false
-                },
-                new Client()
-                {
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientId = "client",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    AllowedScopes = {  "secretApi",
+                    ClientId = "phone_number_authentication",
+                    AllowedGrantTypes = new List<string> { AuthConstants.GrantType.PhoneNumberToken},
+                    ClientSecrets = {new Secret("secret".Sha256())},
+                    AllowedScopes =
+                    {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile },
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "secretApi"
+                    },
+                    AllowOfflineAccess = true
                 }
             };
         public static IEnumerable<ApiScope> ApiScopes() =>
             new List<ApiScope>
             {
-                new ApiScope(){Name = "secretApi"},
+               
             };
         public static IEnumerable<ApiResource> ApiResources() =>
             new List<ApiResource>
             {
+                new ApiResource ("secretApi", "My Api") { UserClaims = { JwtClaimTypes.Role, JwtClaimTypes.PhoneNumber } }
 
             };
 

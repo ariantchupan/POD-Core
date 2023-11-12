@@ -5,10 +5,16 @@ using Microsoft.Extensions.Configuration;
 using IdentityServer.Infrastructure;
 using IdentityServer.Application;
 using IdentityServer.Extensions;
+using IdentityServer.Validation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using System.Reflection;
+using IdentityServer.Config;
+using IdentityServer.Infrastructure.Persistence;
+
 
 namespace IdentityServer
 {
@@ -26,9 +32,10 @@ namespace IdentityServer
         {
             services.AddControllers();
 
+          
             services.AddApplicationServices();
             services.AddInfrastructureServices(_configuration);
-
+           
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
@@ -36,28 +43,32 @@ namespace IdentityServer
             string operationalStoreCS = _configuration.GetConnectionString("operationalStoreCS");
 
 
+            services.AddIdentityServer(options =>
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                })
+                .AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(MemoryConfig.ApiResources())
+                .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
+                .AddInMemoryClients(MemoryConfig.Clients())
+                .AddAspNetIdentity<IdentityUser>();
 
             //services.AddIdentityServer()
-            //    .AddInMemoryClients(MemoryConfig.Clients())
-            //    .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
-            //    .AddInMemoryApiResources(MemoryConfig.ApiResources())
-            //    .AddInMemoryApiScopes(MemoryConfig.ApiScopes())
+            //    //.AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
             //    .AddAspNetIdentity<IdentityUser>()
+            //    .AddConfigurationStore(options =>
+            //    {
+            //        options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
+            //            sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
+            //    })
+            //    .AddOperationalStore(options =>
+            //    {
+            //        options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
+            //            sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
+            //    })
             //    .AddDeveloperSigningCredential();
-
-            services.AddIdentityServer()
-                .AddAspNetIdentity<IdentityUser>()
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(configurationStoreCS,
-                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(operationalStoreCS,
-                        sql => sql.MigrationsAssembly(typeof(Program).Assembly.FullName));
-                })
-                .AddDeveloperSigningCredential();
 
 
             services.AddSwaggerGen(c =>
@@ -76,13 +87,15 @@ namespace IdentityServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1"));
             }
-            HostingExtensions.InitializeDatabase(app);
+            //HostingExtensions.InitializeDatabase(app);
+
+            app.UseRouting();
             app.UseIdentityServer();
 
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+        
 
             app.UseAuthorization();
 
