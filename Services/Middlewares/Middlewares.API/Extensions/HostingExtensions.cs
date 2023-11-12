@@ -1,6 +1,8 @@
-﻿using MassTransit;
+﻿using EventBus.Messages.Common;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Middlewares.API.EventBusConsumer;
 using Middlewares.Application;
 using Middlewares.Infrastructure;
 
@@ -15,16 +17,24 @@ namespace Middlewares.API.Extensions
         public static WebApplication ConfigureServices(
             this WebApplicationBuilder builder, IConfiguration _configuration)
         {
-         
+
             builder.Services.AddControllers();
 
             builder.Services.AddMassTransit(config =>
             {
+                config.AddConsumer<SMSVerifyConsumer>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(_configuration["EventBusSettings:HostAddress"]);
+                    cfg.ReceiveEndpoint(EventBusConstants.VerificationSMSQueue, c =>
+                    {
+                        c.ConfigureConsumer<SMSVerifyConsumer>(ctx);
+                    });
                 });
             });
+            builder.Services.AddScoped<SMSVerifyConsumer>();
+            builder.Services.AddAutoMapper(typeof(Program));
+
 
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);

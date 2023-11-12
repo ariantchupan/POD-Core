@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using IdentityServer.Config;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-
+using IdentityServer.Extensions;
 
 namespace IdentityServer
 {
@@ -47,24 +47,13 @@ namespace IdentityServer
 
                 });
             });
-            //services.AddIdentityServer(options =>
-            //    {
-            //        options.Events.RaiseErrorEvents = true;
-            //        options.Events.RaiseFailureEvents = true;
-            //    })
-            //    .AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
-            //    .AddDeveloperSigningCredential()
-            //    .AddInMemoryApiResources(MemoryConfig.ApiResources())
-            //    .AddInMemoryIdentityResources(MemoryConfig.IdentityResources())
-            //    .AddInMemoryClients(MemoryConfig.Clients())
-            //    .AddAspNetIdentity<IdentityUser>();
 
             services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseFailureEvents = true;
                 })
-                //.AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
+                .AddExtensionGrantValidator<PhoneNumberTokenGrantValidator>()
                 .AddAspNetIdentity<IdentityUser>()
 
                 .AddConfigurationStore(options =>
@@ -96,7 +85,7 @@ namespace IdentityServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1"));
             }
-            //HostingExtensions.InitializeDatabase(app);
+            HostingExtensions.InitializeDatabase(app);
 
             app.UseRouting();
             app.UseIdentityServer();
