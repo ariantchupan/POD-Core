@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
+using EventBus.Messages.Events;
 using IdentityServer.ViewModels;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,17 +19,20 @@ namespace IdentityServer.Controller
         private readonly DataProtectorTokenProvider<IdentityUser> _dataProtectorTokenProvider;
         private readonly PhoneNumberTokenProvider<IdentityUser> _phoneNumberTokenProvider;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IPublishEndpoint _publishEndpoint;
         public VerifyPhoneNumberController(
             IConfiguration configuration,
 
             DataProtectorTokenProvider<IdentityUser> dataProtectorTokenProvider,
             PhoneNumberTokenProvider<IdentityUser> phoneNumberTokenProvider,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            IPublishEndpoint publishEndpoint)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _dataProtectorTokenProvider = dataProtectorTokenProvider ?? throw new ArgumentNullException(nameof(dataProtectorTokenProvider));
             _phoneNumberTokenProvider = phoneNumberTokenProvider ?? throw new ArgumentNullException(nameof(phoneNumberTokenProvider));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PhoneLoginViewModel model)
@@ -93,6 +98,12 @@ namespace IdentityServer.Controller
             IdentityUser user)
         {
             var verifyToken = await _phoneNumberTokenProvider.GenerateAsync("verify_number", _userManager, user);
+
+            SendVerifyEvent eventMessage = new SendVerifyEvent { 
+                MobileNumber = model.PhoneNumber ,
+                Code = verifyToken,
+            };
+            await _publishEndpoint.Publish(eventMessage);
             //var result = await _smsService.SendAsync(model.PhoneNumber, $"Your login verification code is: {verifyToken}");
             return (verifyToken, true);
         }

@@ -4,6 +4,7 @@ using Middlewares.Infrastructure;
 
 
 // Add services to the container.
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 
@@ -13,9 +14,10 @@ try
 {
   
     var builder = WebApplication.CreateBuilder(args);
-    var app = builder
+      var app = builder
         .ConfigureServices(builder.Configuration)
         .ConfigurePipeline();
+
     app.Run();
 }
 // https://github.com/dotnet/runtime/issues/60600
