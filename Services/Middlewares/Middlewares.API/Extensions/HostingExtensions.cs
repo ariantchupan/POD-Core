@@ -9,11 +9,9 @@ namespace Middlewares.API.Extensions
     public static class HostingExtensions
     {
 
-
         private static readonly IConfiguration _config;
 
-        public static WebApplication ConfigureServices(
-            this WebApplicationBuilder builder, IConfiguration _configuration)
+        public static WebApplication ConfigureServices(this WebApplicationBuilder builder, IConfiguration _configuration)
         {
          
             builder.Services.AddControllers();

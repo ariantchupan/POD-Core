@@ -1,6 +1,22 @@
 version: '3.4'
 
 services:
+  middlewares.api:
+    image: ${DOCKER_REGISTRY-}middlewaresapi
+    build:
+      context: .
+      dockerfile: Services/Middlewares/Middlewares.API/Dockerfile
 
-   rabbitmq:
-      image: rabbitmq:3-management-alpine
+  identityserver:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: IdentityServer/IdentityServer/Dockerfile
+
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: APIGateways/OcelotAPIGW/Dockerfile
+
