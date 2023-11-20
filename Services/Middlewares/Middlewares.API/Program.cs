@@ -23,11 +23,11 @@ try
 // https://github.com/dotnet/runtime/issues/60600
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException")
 {
-   // Log.Fatal(ex, "Unhandled exception");
+	Console.WriteLine(ex.ToString(), "Unhandled exception");
 }
 finally
 {
-  //  Log.Information("Shut down complete");
-  //  Log.CloseAndFlush();
+    Console.WriteLine("Shut down complete");
+    
 }
 

@@ -41,7 +41,6 @@ namespace IdentityServer.Controller
             {
                 return BadRequest(ModelState);
             }
-
             var user = await GetUser(model);
             var response = await SendSmsRequet(model, user);
 
@@ -49,8 +48,7 @@ namespace IdentityServer.Controller
             {
                 return BadRequest("Sending sms failed");
             }
-
-            var resendToken = await _dataProtectorTokenProvider.GenerateAsync("resend_token", _userManager, user);
+			var resendToken = await _dataProtectorTokenProvider.GenerateAsync("resend_token", _userManager, user);
             var body = GetBody(response.VerifyToken, resendToken);
 
             return Accepted(body);

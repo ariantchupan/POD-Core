@@ -48,6 +48,7 @@ namespace IdentityServer
                 });
             });
 
+
             services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -91,7 +92,7 @@ namespace IdentityServer
             app.UseIdentityServer();
 
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
 
 

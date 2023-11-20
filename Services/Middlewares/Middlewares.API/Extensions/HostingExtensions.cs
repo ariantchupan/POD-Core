@@ -23,13 +23,16 @@ namespace Middlewares.API.Extensions
                 config.AddConsumer<SMSVerifyConsumer>();
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
-                    cfg.Host(_configuration["EventBusSettings:HostAddress"]);
+	                cfg.AutoStart = true;
+					cfg.Host(_configuration["EventBusSettings:HostAddress"]);
                     cfg.ReceiveEndpoint(EventBusConstants.VerificationSMSQueue, c =>
                     {
                         c.ConfigureConsumer<SMSVerifyConsumer>(ctx);
-                    });
+                        
+					});
                 });
             });
+
             builder.Services.AddScoped<SMSVerifyConsumer>();
             builder.Services.AddAutoMapper(typeof(Program));
 
@@ -51,7 +54,7 @@ namespace Middlewares.API.Extensions
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseAuthorization();
 

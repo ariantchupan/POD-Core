@@ -2,13 +2,7 @@ version: '3.4'
 
 services:
 
-  configurationStoredb:
-   image: mcr.microsoft.com/mssql/server:2017-latest
-
-  operationalStoredb:
-   image: mcr.microsoft.com/mssql/server:2017-latest
-
-  identitydb:
+  identityserverdb:
    image: mcr.microsoft.com/mssql/server:2017-latest
 
   rabbitmq:

@@ -14,7 +14,11 @@ namespace IdentityServer.Infrastructure
             services.AddDbContext<AspNetIdentityDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("IdentityDBConnectionString")
-                    , b => b.MigrationsAssembly(("IdentityServer.Infrastructure")));
+                    , b =>
+                    {
+	                    b.EnableRetryOnFailure(5, TimeSpan.FromSeconds(5),null);
+	                    b.MigrationsAssembly(("IdentityServer.Infrastructure"));
+                    });
 
             });
             services.AddIdentity<IdentityUser, IdentityRole>()

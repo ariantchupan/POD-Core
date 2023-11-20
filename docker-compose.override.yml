@@ -2,34 +2,14 @@ version: '3.4'
 
 services:
 
-  configurationStoredb:
-    container_name: configurationStoredb
+  identityserverdb:
+    container_name: identityserverdb
     environment:
         SA_PASSWORD: "SwN12345678"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
         - "1433:1433"
-
-  operationalStoredb:
-    container_name: operationalStoredb
-    environment:
-        SA_PASSWORD: "SwN12345678"
-        ACCEPT_EULA: "Y"
-    restart: always
-    ports:
-        - "1434:1433"
-
-        
-  identitydb:
-    container_name: identitydb
-    environment:
-        SA_PASSWORD: "SwN12345678"
-        ACCEPT_EULA: "Y"
-    restart: always
-    ports:
-        - "1435:1433"
-
 
   rabbitmq:
     container_name: rabbitmq
@@ -39,33 +19,50 @@ services:
      - "15672:15672" 
                 
   middlewares.api:
+    container_name: middlewares.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
+      - "KavehnegarSettings:ApiKey=444E6C6378534967385758394B41572B57434F7A4C644D664558485631704464"
+      - "KavehnegarSettings:TemplateVerify=verify"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+
+    depends_on:
+      - rabbitmq
     ports:
-      - "80"
-      - "443"
+      - "5002:80"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+      - ~/.aspnet/https:/root/.aspnet/https:ro
   identityserver:
+    container_name: identityserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
+      - "ConnectionStrings:configurationStoreCS=Server=identityserverdb;Database=ConfigurationStoreDatabase;User Id=sa;Password=SwN12345678;Encrypt=False"
+      - "ConnectionStrings:operationalStoreCS=Server=identityserverdb;Database=OperationalStoreDatabase;User Id=sa;Password=SwN12345678;Encrypt=False"
+      - "ConnectionStrings:IdentityDBConnectionString=Server=identityserverdb;Database=IdentityDatabase;User Id=sa;Password=SwN12345678;Encrypt=False"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+
+    depends_on:
+      - identityserverdb
+      - rabbitmq
     ports:
-      - "80"
-      - "443"
+      - "5001:80"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+      - ~/.aspnet/https:/root/.aspnet/https:ro
 
   ocelotapigw:
+    container_name: ocelotapigw
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - identityserver
+      - middlewares.api
     ports:
-      - "80"
-      - "443"
+      - "5000:80"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+      - ~/.aspnet/https:/root/.aspnet/https:ro
