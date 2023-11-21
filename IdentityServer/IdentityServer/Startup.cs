@@ -96,7 +96,6 @@ namespace IdentityServer
 			// app.UseHttpsRedirection();
 			app.UseCors(builder =>
 				builder
-					.AllowCredentials()
 					.AllowAnyOrigin()
 					.AllowAnyMethod()
 					.AllowAnyHeader());

@@ -28,7 +28,6 @@ app.UseAuthorization();
 
 app.UseCors(builder =>
 	builder
-		.AllowCredentials()
 		.AllowAnyOrigin()
 		.AllowAnyMethod()
 		.AllowAnyHeader());

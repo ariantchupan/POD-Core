@@ -19,7 +19,6 @@ try
         .ConfigurePipeline();
 	app.UseCors(builder =>
 		builder
-			.AllowCredentials()
 			.AllowAnyOrigin()
 			.AllowAnyMethod()
 			.AllowAnyHeader());
