@@ -15,6 +15,10 @@ using IdentityServer.Extensions;
 
 namespace IdentityServer
 {
+	public class CorsPolicies
+	{
+		public const string CorsPolicy = nameof(CorsPolicy);
+	}
 	public class Startup
 	{
 		private readonly IConfiguration _configuration;
@@ -49,7 +53,12 @@ namespace IdentityServer
 			});
 
 
-			services.AddCors();
+			services.AddCors(o => o.AddPolicy(CorsPolicies.CorsPolicy, builder =>
+			{
+				builder.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader();
+			}));
 			services.AddIdentityServer(options =>
 				{
 					options.Events.RaiseErrorEvents = true;
@@ -96,6 +105,7 @@ namespace IdentityServer
 			// app.UseHttpsRedirection();
 			app.UseCors(builder =>
 				builder
+					
 					.AllowAnyOrigin()
 					.AllowAnyMethod()
 					.AllowAnyHeader());
