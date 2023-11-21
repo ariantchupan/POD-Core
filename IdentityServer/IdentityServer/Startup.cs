@@ -12,13 +12,10 @@ using IdentityServer.Config;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using IdentityServer.Extensions;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace IdentityServer
 {
-	public class CorsPolicies
-	{
-		public const string CorsPolicy = nameof(CorsPolicy);
-	}
 	public class Startup
 	{
 		private readonly IConfiguration _configuration;
@@ -53,12 +50,17 @@ namespace IdentityServer
 			});
 
 
-			services.AddCors(o => o.AddPolicy(CorsPolicies.CorsPolicy, builder =>
+			var corsBuilder = new CorsPolicyBuilder();
+			corsBuilder.AllowAnyHeader();
+			corsBuilder.AllowAnyMethod();
+			corsBuilder.AllowAnyOrigin(); // For anyone access.
+			//corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url. Don't add a forward slash on the end!
+			corsBuilder.AllowCredentials();
+
+			services.AddCors(options =>
 			{
-				builder.AllowAnyOrigin()
-					.AllowAnyMethod()
-					.AllowAnyHeader();
-			}));
+				options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+			});
 			services.AddIdentityServer(options =>
 				{
 					options.Events.RaiseErrorEvents = true;
@@ -98,17 +100,14 @@ namespace IdentityServer
 			}
 			HostingExtensions.InitializeDatabase(app);
 
+			app.UseCors("SiteCorsPolicy");
+
 			app.UseRouting();
 			app.UseIdentityServer();
 
 
 			// app.UseHttpsRedirection();
-			app.UseCors(builder =>
-				builder
-					
-					.AllowAnyOrigin()
-					.AllowAnyMethod()
-					.AllowAnyHeader());
+	
 
 
 			app.UseAuthorization();
