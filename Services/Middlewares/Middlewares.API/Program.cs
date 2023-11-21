@@ -17,8 +17,12 @@ try
       var app = builder
         .ConfigureServices(builder.Configuration)
         .ConfigurePipeline();
-
-    app.Run();
+      app.UseCors(builder =>
+	      builder
+		      .AllowAnyOrigin()
+		      .AllowAnyMethod()
+		      .AllowAnyHeader());
+	app.Run();
 }
 // https://github.com/dotnet/runtime/issues/60600
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException")
