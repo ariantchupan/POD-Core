@@ -28,6 +28,12 @@ namespace IdentityServer
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
+
+			services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+				.AllowAnyMethod()
+				.AllowAnyHeader()));
+
+
 			services.AddControllers();
 
 
@@ -50,17 +56,8 @@ namespace IdentityServer
 			});
 
 
-			var corsBuilder = new CorsPolicyBuilder();
-			corsBuilder.AllowAnyHeader();
-			corsBuilder.AllowAnyMethod();
-			corsBuilder.AllowAnyOrigin(); // For anyone access.
-			//corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url. Don't add a forward slash on the end!
-			corsBuilder.AllowCredentials();
 
-			services.AddCors(options =>
-			{
-				options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
-			});
+
 			services.AddIdentityServer(options =>
 				{
 					options.Events.RaiseErrorEvents = true;
@@ -92,6 +89,7 @@ namespace IdentityServer
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			app.UseCors("AllowAll");
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -100,7 +98,7 @@ namespace IdentityServer
 			}
 			HostingExtensions.InitializeDatabase(app);
 
-			app.UseCors("SiteCorsPolicy");
+		
 
 			app.UseRouting();
 			app.UseIdentityServer();
