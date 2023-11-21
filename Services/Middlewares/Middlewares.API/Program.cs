@@ -17,11 +17,12 @@ try
       var app = builder
         .ConfigureServices(builder.Configuration)
         .ConfigurePipeline();
-      app.UseCors(builder =>
-	      builder
-		      .AllowAnyOrigin()
-		      .AllowAnyMethod()
-		      .AllowAnyHeader());
+	app.UseCors(builder =>
+		builder
+			.AllowCredentials()
+			.AllowAnyOrigin()
+			.AllowAnyMethod()
+			.AllowAnyHeader());
 	app.Run();
 }
 // https://github.com/dotnet/runtime/issues/60600

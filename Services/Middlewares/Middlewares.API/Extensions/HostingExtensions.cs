@@ -17,7 +17,7 @@ namespace Middlewares.API.Extensions
         {
 
             builder.Services.AddControllers();
-
+            builder.Services.AddCors();
             builder.Services.AddMassTransit(config =>
             {
                 config.AddConsumer<SMSVerifyConsumer>();
